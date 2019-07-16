@@ -7,18 +7,12 @@ var fs = require("fs");
 var moment = require('moment');
 moment().format();
 
-//node liri.js movie-this "wonder woman"
+//node liri.js movie-this "movie name"
 var command = process.argv[2];
 var arg2 = process.argv[3];
 
 
-//   * Name of the venue
-//   * Venue location
-//   * Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-
-
-// node liri.js spotify-this "Babe"
+// node liri.js spotify-this "song name"
 //   * Artist(s)
 //   * The song's name
 //   * A preview link of the song from Spotify
@@ -31,50 +25,8 @@ var arg2 = process.argv[3];
 
 
 
-
-//--------------------------------------------------------
-
-
-//3. node liri.js movie-this "<movie name here>""
-
-
-
-// * This will output the following information to your terminal/bash window:
-
-
-//   ```
-//     * Title of the movie.
-//     * Year the movie came out.
-//     * IMDB Rating of the movie.
-//     * Rotten Tomatoes Rating of the movie.
-//     * Country where the movie was produced.
-//     * Language of the movie.
-//     * Plot of the movie.
-//     * Actors in the movie.
-//   ```
-
-// * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-//   * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
-
-//   * It's on Netflix!
-
-// * You'll use the `axios` package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use `trilogy`.
-//http://www.omdbapi.com/?apikey=[trilogy]&
-
-
-
 //-----------------------------------------
 
-
-// `do-what-it-says`
-// 4. `node liri.js do-what-it-says`
-
-// * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
-
-//   * It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
-
-//   * Edit the text in random.txt to test out the feature for movie-this and concert-this.
 
 
 startProg(command, arg2);
@@ -93,6 +45,12 @@ function startProg(command,arg2){
         
     }
 }
+
+
+//3. node liri.js movie-this "movie name"
+// * This will output the following information to your terminal/bash window:
+//     * Title of the movie./ *Year the movie came out./* IMDB Rating/*Rotten Tomatoes Rating/* Country produced./*Language/* Plot/*Actors.
+// * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 var movieThis = function(movie){
     if(movie === undefined){
@@ -113,9 +71,11 @@ var movieThis = function(movie){
     })
 }
 
+//node liri.js concert-this "rtist/band name"
+//render *name of venue/*venue location/*date of event - moment "MM/DD/YYYY"
+
 function concertThis(artist){
   
-
     var queryURL= "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
     axios.get(queryURL).then(function(res){
         var result  =  res.data;
@@ -123,6 +83,21 @@ function concertThis(artist){
         for(var i=0; i<result.length; i++){
             var show = result[i];
             console.log(show.venue.country);
+            console.log(show.venue.city);
+            console.log(show.venue.name);
+            console.log(show.datetime);
         }
     })
 }
+
+
+
+
+//------------------------------------------
+// 4. `node liri.js do-what-it-says`
+
+// * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
+
+//   * It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
+
+//   * Edit the text in random.txt to test out the feature for movie-this and concert-this.
